@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@constants": ["packages/constants/src/index.ts"],
+      "@validator": ["packages/validator/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

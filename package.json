@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "gen-app": "cd apps && nx g @nx/nest:app",
+    "gen-lib": "cd packages && nx g @nx/nest:lib",
     "serve-zoo-app": "nx run zoo-app:serve:production"
   },
   "private": true,
@@ -19,6 +20,7 @@
     "@nx/webpack": "16.5.5",
     "@types/jest": "^29.4.0",
     "@types/node": "~18.7.1",
+    "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
     "eslint": "~8.15.0",
@@ -42,6 +44,9 @@
     "@nestjs/microservices": "^10.1.2",
     "@nestjs/platform-express": "^10.0.2",
     "axios": "^1.0.0",
+    "bcrypt": "^5.1.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "tslib": "^2.3.0"
