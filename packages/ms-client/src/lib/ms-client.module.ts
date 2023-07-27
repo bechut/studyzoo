@@ -34,6 +34,20 @@ import { MsClientService } from './ms-client.service';
         },
         inject: [ConfigService],
       },
+      {
+        name: 'SESSION_CLIENT',
+        imports: [ConfigModule],
+        useFactory: async (configService: ConfigService) => {
+          return {
+            transport: Transport.TCP,
+            options: {
+              host: configService.get<string>('SESSION_MS_HOST'),
+              port: configService.get<number>('SESSION_MS_PORT'),
+            },
+          };
+        },
+        inject: [ConfigService],
+      },
     ]),
   ],
   controllers: [],

@@ -8,6 +8,8 @@ export class MsClientService {
         private readonly msTestClient: ClientProxy,
         @Inject('USER_CLIENT')
         private readonly msUserClient: ClientProxy,
+        @Inject('SESSION_CLIENT')
+        private readonly msSessionClient: ClientProxy,
     ) { }
 
     testClient() {
@@ -16,5 +18,9 @@ export class MsClientService {
 
     userClient() {
         return this.msUserClient;
+    }
+
+    sessionClient() {
+        return this.msSessionClient;
     }
 }

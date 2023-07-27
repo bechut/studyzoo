@@ -1,0 +1,10 @@
+-- CreateTable
+CREATE TABLE "Otp" (
+    "id" TEXT NOT NULL,
+    "value" VARCHAR(6) NOT NULL DEFAULT '',
+    "createdAt" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "expiredAt" TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    "user_id" TEXT,
+
+    CONSTRAINT "Otp_pkey" PRIMARY KEY ("id")
+);

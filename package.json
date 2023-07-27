@@ -8,7 +8,9 @@
     "serve-test": "nx run test:serve:production",
     "serve-test-ms": "prisma generate --schema=apps/test-ms/prisma/schema.prisma && nx run test-ms:serve:production",
     "serve-user-ms": "prisma generate --schema=apps/user-ms/prisma/schema.prisma && nx run user-ms:serve:production",
-    "gen-mc-ms-user": "cd apps/user-ms/src/app && nest g mo && nest g co"
+    "gen-mc-ms-user": "cd apps/user-ms/src/app && nest g mo && nest g co",
+    "serve-session-ms": "prisma generate --schema=apps/session-ms/prisma/schema.prisma && nx run session-ms:serve:production",
+    "gen-mc-ms-session": "cd apps/session-ms/src/app && nest g mo && nest g co"
   },
   "private": true,
   "devDependencies": {

@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+  output        = "client/session"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("SESSION_MS_DATABASE_URL")
+}
+
+model Otp {
+  id        String    @id @default(uuid())
+  value     String    @default("") @db.VarChar(6)
+  createdAt DateTime  @default(now()) @db.Timestamptz
+  expiredAt DateTime? @default(now()) @db.Timestamptz
+  user_id   String?
+}
