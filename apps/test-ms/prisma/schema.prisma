@@ -1,0 +1,14 @@
+generator client {
+  provider = "prisma-client-js"
+  output        = "client/test"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("TEST_MS_DATABASE_URL")
+}
+
+model Test {
+  id String @id @default(uuid())
+}
