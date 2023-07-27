@@ -20,6 +20,20 @@ import { MsClientService } from './ms-client.service';
         },
         inject: [ConfigService],
       },
+      {
+        name: 'USER_CLIENT',
+        imports: [ConfigModule],
+        useFactory: async (configService: ConfigService) => {
+          return {
+            transport: Transport.TCP,
+            options: {
+              host: configService.get<string>('USER_MS_HOST'),
+              port: configService.get<number>('USER_MS_PORT'),
+            },
+          };
+        },
+        inject: [ConfigService],
+      },
     ]),
   ],
   controllers: [],

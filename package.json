@@ -6,7 +6,9 @@
     "gen-app": "cd apps && nx g @nx/nest:app",
     "gen-package": "cd packages && nx g @nx/nest:lib",
     "serve-test": "nx run test:serve:production",
-    "serve-test-ms": "prisma generate --schema=apps/test-ms/prisma/schema.prisma && nx run test-ms:serve:production"
+    "serve-test-ms": "prisma generate --schema=apps/test-ms/prisma/schema.prisma && nx run test-ms:serve:production",
+    "serve-user-ms": "prisma generate --schema=apps/user-ms/prisma/schema.prisma && nx run user-ms:serve:production",
+    "gen-mc-ms-user": "cd apps/user-ms/src/app && nest g mo && nest g co"
   },
   "private": true,
   "devDependencies": {
@@ -19,6 +21,7 @@
     "@nx/nest": "^16.5.5",
     "@nx/node": "16.5.5",
     "@nx/webpack": "16.5.5",
+    "@types/bcrypt": "^5.0.0",
     "@types/jest": "^29.4.0",
     "@types/lodash": "^4.14.196",
     "@types/node": "~18.7.1",
@@ -46,6 +49,7 @@
     "@nestjs/platform-express": "^10.0.2",
     "@prisma/client": "^5.0.0",
     "axios": "^1.0.0",
+    "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "jest-mock-extended": "^3.0.4",

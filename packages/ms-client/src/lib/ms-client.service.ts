@@ -6,9 +6,15 @@ export class MsClientService {
     constructor(
         @Inject('TEST_CLIENT')
         private readonly msTestClient: ClientProxy,
+        @Inject('USER_CLIENT')
+        private readonly msUserClient: ClientProxy,
     ) { }
 
     testClient() {
-        return this.msTestClient; 
+        return this.msTestClient;
+    }
+
+    userClient() {
+        return this.msUserClient;
     }
 }
