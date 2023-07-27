@@ -2,6 +2,7 @@ export const USER_SELECTION = {
     id: true,
     email: true,
     status: true,
+    password: true,
     createdAt: true,
     updatedAt: true,
     Profile: {
