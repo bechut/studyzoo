@@ -1,10 +1,10 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
 import { AppService } from './app.service';
 
 import { MsClientService } from '@ms-client';
 import { lastValueFrom } from 'rxjs';
-import { TestDto, LoginDto } from '@validator';
+import { TestDto } from '@validator';
 
 @Controller()
 export class AppController {
@@ -13,12 +13,6 @@ export class AppController {
   @Get()
   async getData() {
     const test$ = this.msClientService.testClient().send({ cmd: 'test' }, { test: '1' } as TestDto);
-    return await lastValueFrom(test$);
-  }
-
-  @Post('auth/login')
-  async login(@Body() body: LoginDto) {
-    const test$ = this.msClientService.sessionClient().send({ service: 'session', cmd: 'login' }, body);
     return await lastValueFrom(test$);
   }
 }
