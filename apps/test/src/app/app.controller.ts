@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 
 import { MsClientService } from '@ms-client';
 import { lastValueFrom } from 'rxjs';
+import { TestDto } from '@validator';
 
 @Controller()
 export class AppController {
@@ -11,7 +12,7 @@ export class AppController {
 
   @Get()
   async getData() {
-    const test$ = this.msClientService.testClient().send({ cmd: 'test' }, { a: 1 });
+    const test$ = this.msClientService.testClient().send({ cmd: 'test' }, { test: '1' } as TestDto);
     return await lastValueFrom(test$);
   }
 }

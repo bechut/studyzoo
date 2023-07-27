@@ -3,6 +3,7 @@ import { Controller } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MessagePattern } from '@nestjs/microservices';
 import prisma from '../../prisma/client'
+// import { RpcException } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
@@ -11,7 +12,6 @@ export class AppController {
   @MessagePattern({ cmd: 'test' })
   async getData(data: any) {
     const test = await prisma.test.findMany();
-    console.log(test);
     return 'test-ms data' + JSON.stringify(data);
   }
 }
