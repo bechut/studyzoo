@@ -13,8 +13,8 @@ export interface Response {
 export class ResponseInterceptor<T> implements NestInterceptor<T, Response> {
     intercept(context: ExecutionContext, next: CallHandler): Observable<Response> {
         return next.handle().pipe(map(data => ({
-            data: ['string', 'number'].includes(typeof data) ? null : _.pick(data, ['data']).data,
-            message: ['string', 'number'].includes(typeof data) ? data : _.pick(data, ['message']).message,
+            data: data.length ? data : ['string', 'number'].includes(typeof data) ? null : { ...(_.omit(data, ['message', 'pager'])) },
+            message: (['string', 'number'].includes(typeof data) ? data : _.pick(data, ['message']).message) || 'Success',
             pager: _.pick(data, ['pager']).pager || null,
         })));
     }
