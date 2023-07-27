@@ -17,9 +17,9 @@
     "paths": {
       "@constants": ["packages/constants/src/index.ts"],
       "@interceptor": ["packages/interceptor/src/index.ts"],
+      "@jwt": ["packages/jwt/src/index.ts"],
       "@ms-client": ["packages/ms-client/src/index.ts"],
-      "@validator": ["packages/validator/src/index.ts"],
-      "@jwt": ["packages/jwt/src/index.ts"]
+      "@validator": ["packages/validator/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
