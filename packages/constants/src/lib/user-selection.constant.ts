@@ -1,3 +1,5 @@
+
+
 export const USER_SELECTION = {
     id: true,
     email: true,
@@ -13,6 +15,15 @@ export const USER_SELECTION = {
             gender: true,
             age: true,
             bio: true,
+        }
+    },
+}
+
+export const WITH_PLAYER = {
+    Players: {
+        select: {
+            id: true,
+            Profile: USER_SELECTION.Profile
         }
     }
 }

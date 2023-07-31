@@ -37,4 +37,10 @@ export class AuthController {
             message: 'Login successfully'
         };
     }
+
+    @MessagePattern({ service: 'session', cmd: 'get-otp-by-id' })
+    async getOtpByValue(data: { id: string }) {
+        const otp = prisma.otp.findUniqueOrThrow({ where: { id: data.id } }).catch(e => { throw new RpcException(e.message) })
+        return otp;
+    }
 }

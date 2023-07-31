@@ -6,10 +6,11 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 
 import { RPCExceptionFilter } from '@interceptor';
+import { PlayerModule } from './player/player.module';
 
 
 @Module({
-  imports: [UserModule],
+  imports: [UserModule, PlayerModule],
   controllers: [AppController],
   providers: [AppService, { provide: APP_FILTER, useClass: RPCExceptionFilter }],
 })

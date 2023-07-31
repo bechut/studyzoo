@@ -19,7 +19,8 @@
       "@interceptor": ["packages/interceptor/src/index.ts"],
       "@jwt": ["packages/jwt/src/index.ts"],
       "@ms-client": ["packages/ms-client/src/index.ts"],
-      "@validator": ["packages/validator/src/index.ts"]
+      "@validator": ["packages/validator/src/index.ts"],
+      "@user-ms-prisma": ["apps/user-ms/prisma/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   output        = "client/user"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
@@ -17,6 +17,7 @@ model User {
   createdAt DateTime  @default(now()) @db.Timestamptz
   updatedAt DateTime? @db.Timestamptz
   Profile   Profile?
+  Players   Player[]
 }
 
 enum GENDERS {
@@ -32,6 +33,15 @@ model Profile {
   gender     GENDERS?
   age        Int?
   bio        String?
-  user_id    String?   @unique
-  User       User?     @relation(fields: [user_id], references: [id])
+  user_id    String?  @unique
+  User       User?    @relation(fields: [user_id], references: [id])
+  player_id  String?  @unique
+  Player     Player?  @relation(fields: [player_id], references: [id])
+}
+
+model Player {
+  id      String   @id @default(uuid())
+  user_id String?
+  User    User?    @relation(fields: [user_id], references: [id])
+  Profile Profile?
 }
