@@ -16,11 +16,13 @@
     "baseUrl": ".",
     "paths": {
       "@constants": ["packages/constants/src/index.ts"],
+      "@drive-upload": ["packages/drive-upload/src/index.ts"],
       "@interceptor": ["packages/interceptor/src/index.ts"],
       "@jwt": ["packages/jwt/src/index.ts"],
       "@ms-client": ["packages/ms-client/src/index.ts"],
+      "@user-ms-prisma": ["apps/user-ms/prisma/index.ts"],
       "@validator": ["packages/validator/src/index.ts"],
-      "@user-ms-prisma": ["apps/user-ms/prisma/index.ts"]
+      "@mailer": ["packages/mailer/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

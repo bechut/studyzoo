@@ -26,3 +26,10 @@ export class CreatePlayerDto {
   @Type(() => PlayerProfileDto)
   players: PlayerProfileDto[]
 }
+
+export class RegisterBinocularDto {
+  @IsNotEmpty()
+  player_id: string;
+  @IsNotEmpty()
+  machine_code: string;
+}

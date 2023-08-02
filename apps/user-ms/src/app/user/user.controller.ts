@@ -37,7 +37,12 @@ export class UserController {
                 }
             })
         ]).catch(e => { throw new RpcException(e.message) })
-        return 'User successfully created';
+        return await prisma.user.findUniqueOrThrow({
+            select: USER_SELECTION,
+            where: {
+                id: user_id,
+            }
+        });
     }
 
     @MessagePattern({ service: 'user', cmd: 'get-by-email' })
@@ -59,7 +64,6 @@ export class UserController {
                 id: data.id,
             },
         }).catch(e => { throw new RpcException(e.message) })
-        console.log(user)
         return user;
     }
 

@@ -1,0 +1,74 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "client/mission"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("MISSION_MS_DATABASE_URL")
+}
+
+enum MachineType {
+  BINOCULAR
+  OUTPOST
+}
+
+enum MachineStatus {
+  USED
+  AVAILABLE
+}
+
+model Mission {
+  id           String    @id @default(uuid())
+  code         String    @unique @db.VarChar(16)
+  title        String    @db.VarChar(255)
+  videoUrl     String    @db.VarChar(255)
+  mapImage     String    @db.VarChar(255)
+  mapImageUrl  String    @db.VarChar(255)
+  duration     Int
+  distance     String    @db.VarChar(32)
+  description  String
+  createdAt    DateTime  @default(now()) @db.Timestamptz
+  lastModified DateTime? @updatedAt @db.Timestamptz
+
+  Activities Activity[]
+  Badges     Badge[]
+}
+
+model Activity {
+  id           String      @id @default(uuid())
+  title        String      @db.VarChar(255)
+  mapImage     String      @db.VarChar(255)
+  mapImageUrl  String      @db.VarChar(255)
+  description  String
+  createdAt    DateTime    @default(now()) @db.Timestamptz
+  lastModified DateTime?   @updatedAt @db.Timestamptz
+  for          MachineType @default(BINOCULAR)
+
+  mission_id String?
+  Mission    Mission? @relation(fields: [mission_id], references: [id])
+}
+
+model Badge {
+  id                   String    @id @default(uuid())
+  title                String    @db.VarChar(255)
+  badgeImage           String    @db.VarChar(255)
+  badgeImageUrl        String    @db.VarChar(255)
+  description          String
+  createdAt            DateTime  @default(now()) @db.Timestamptz
+  lastModified         DateTime? @updatedAt @db.Timestamptz
+  activities_completed Int
+
+  mission_id String?
+  Mission    Mission? @relation(fields: [mission_id], references: [id])
+}
+
+model Machine {
+  id        String        @id @default(uuid())
+  name      String        @db.VarChar(255)
+  code      String        @db.VarChar(255)
+  type      MachineType
+  status    MachineStatus
+  player_id String?
+}

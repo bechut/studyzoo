@@ -8,24 +8,35 @@ import { UserModule } from './user/user.module';
 import { AuthGuard, ExceptionInterceptor, ResponseInterceptor } from '@interceptor';
 import { JwtModule } from '@jwt';
 import { MsClientModule } from '@ms-client';
+import { MissionModule } from './mission/mission.module';
+import { IntroModule } from './intro/intro.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [AuthModule, UserModule, JwtModule, MsClientModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    AuthModule,
+    UserModule,
+    JwtModule,
+    MsClientModule,
+    MissionModule,
+    IntroModule
+  ],
   controllers: [AppController],
   providers: [
-    AppService, 
-    { 
-      provide: APP_INTERCEPTOR, 
-      useClass: ExceptionInterceptor 
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ExceptionInterceptor
     },
-    { 
-      provide: APP_INTERCEPTOR, 
-      useClass: ResponseInterceptor 
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor
     },
-    { 
-      provide: APP_GUARD, 
-      useClass: AuthGuard 
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard
     }
   ],
 })
-export class AppModule {}
+export class AppModule { }

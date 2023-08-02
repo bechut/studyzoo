@@ -9,9 +9,16 @@ datasource db {
   url      = env("SESSION_MS_DATABASE_URL")
 }
 
+enum OTP_TYPE {
+  LOGIN
+  ACCESS_TOKEN
+  FORGOT_PASSWORD
+}
+
 model Otp {
   id        String    @id @default(uuid())
-  value     String    @default("") @db.VarChar(6)
+  value     String    @default("")
+  type      OTP_TYPE  @default(LOGIN)
   createdAt DateTime  @default(now()) @db.Timestamptz
   expiredAt DateTime? @default(now()) @db.Timestamptz
   user_id   String?

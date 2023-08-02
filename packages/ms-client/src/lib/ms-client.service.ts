@@ -10,6 +10,8 @@ export class MsClientService {
         private readonly msUserClient: ClientProxy,
         @Inject('SESSION_CLIENT')
         private readonly msSessionClient: ClientProxy,
+        @Inject('MISSION_CLIENT')
+        private readonly msMissionClient: ClientProxy,
     ) { }
 
     testClient() {
@@ -22,5 +24,9 @@ export class MsClientService {
 
     sessionClient() {
         return this.msSessionClient;
+    }
+
+    missionClient() {
+        return this.msMissionClient;
     }
 }

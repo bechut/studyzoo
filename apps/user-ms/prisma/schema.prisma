@@ -45,3 +45,12 @@ model Player {
   User    User?    @relation(fields: [user_id], references: [id])
   Profile Profile?
 }
+
+model Intro {
+  id        String    @id @default(uuid())
+  title     String    @default("") @db.VarChar(255) @unique()
+  image     String    @default("") @db.VarChar(255)
+  image_url String    @default("") @db.VarChar(255)
+  createdAt DateTime  @default(now()) @db.Timestamptz
+  updatedAt DateTime? @db.Timestamptz
+}

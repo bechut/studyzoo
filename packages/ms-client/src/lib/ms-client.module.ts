@@ -48,6 +48,20 @@ import { MsClientService } from './ms-client.service';
         },
         inject: [ConfigService],
       },
+      {
+        name: 'MISSION_CLIENT',
+        imports: [ConfigModule],
+        useFactory: async (configService: ConfigService) => {
+          return {
+            transport: Transport.TCP,
+            options: {
+              host: configService.get<string>('MISSION_MS_HOST'),
+              port: configService.get<number>('MISSION_MS_PORT'),
+            },
+          };
+        },
+        inject: [ConfigService],
+      },
     ]),
   ],
   controllers: [],

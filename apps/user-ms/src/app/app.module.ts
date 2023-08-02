@@ -7,10 +7,11 @@ import { UserModule } from './user/user.module';
 
 import { RPCExceptionFilter } from '@interceptor';
 import { PlayerModule } from './player/player.module';
+import { IntroModule } from './intro/intro.module';
 
 
 @Module({
-  imports: [UserModule, PlayerModule],
+  imports: [UserModule, PlayerModule, IntroModule],
   controllers: [AppController],
   providers: [AppService, { provide: APP_FILTER, useClass: RPCExceptionFilter }],
 })
