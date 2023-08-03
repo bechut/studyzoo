@@ -12,6 +12,15 @@ export class VerifyDto {
   @IsNotEmpty()
   @MinLength(6)
   otp: string;
+}
+export class ResetPasswordDto {
+  @IsEmail()
+  email: string;
+}
+export class ChangePasswordDto {
   @IsNotEmpty()
-  user_id;
+  @MinLength(6)
+  otp: string;
+  @IsNotEmpty()
+  new_password: string;
 }

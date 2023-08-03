@@ -30,7 +30,6 @@ export class UserController {
             }),
             prisma.profile.create({
                 data: {
-                    id: user_id,
                     first_name: data.first_name,
                     last_name: data.last_name,
                     user_id
@@ -90,5 +89,18 @@ export class UserController {
                 updatedAt: new Date(),
             }
         });
+    }
+
+    @MessagePattern({ service: 'user', cmd: 'update-password' })
+    async updatePassword(data: { user_id: string, new_password: string }) {
+        return await prisma.user.update({
+            data: {
+                password: await hash(data.new_password, await genSalt(10)),
+                updatedAt: new Date()
+            },
+            where: {
+                id: data.user_id
+            }
+        }).catch(e => { throw new RpcException(e.message) });
     }
 }

@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Multer } from 'multer';
-import { Public } from '@interceptor';
 import { join } from 'path';
 import { cwd } from 'process';
 import { DriveUploadService } from '@drive-upload';
@@ -27,7 +26,6 @@ export class IntroController {
         private readonly msClientService: MsClientService,
     ) { }
 
-    @Public()
     @Get()
     async getAll() {
         const intros$ = this.msClientService.userClient().send(
@@ -39,7 +37,6 @@ export class IntroController {
         });
     }
 
-    @Public()
     @Post()
     @UseInterceptors(FileInterceptor('file'))
     async create(@UploadedFile() file: Express.Multer.File, @Body() body: { title: string }) {
@@ -79,7 +76,6 @@ export class IntroController {
             });
     }
 
-    @Public()
     @Put(':id')
     @UseInterceptors(FileInterceptor('file'))
     async update(

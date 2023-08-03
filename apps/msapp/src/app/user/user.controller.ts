@@ -21,10 +21,13 @@ export class UserController {
     @Public()
     @Post()
     async create(@Body() body: CreateUserDto) {
-        this.msClientService.userClient().send(
+        const user$ = this.msClientService.userClient().send(
             { service: 'user', cmd: 'create' },
             body
         );
+
+        await lastValueFrom(user$).catch((e) => { throw new BadRequestException(e) })
+
         return 'Create user successfully';
     }
 

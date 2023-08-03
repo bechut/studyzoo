@@ -8,6 +8,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@jwt';
 import { lastValueFrom } from 'rxjs';
+import moment from 'moment'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -30,10 +31,15 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
     const decode: any = this.jwtService.get().decode(bearer);
-    const otp$ = this.msClientService.sessionClient().send({ service: 'session', cmd: 'get-otp-by-id' }, { id: decode.value });
+    const otp$ = this.msClientService.sessionClient().send(
+      { service: 'session', cmd: 'get-access-token-otp' },
+      { id: decode.value }
+    );
     const otp = await lastValueFrom(otp$).catch(e => { throw new UnauthorizedException(e.message) });
     const user$ = this.msClientService.userClient().send({ service: 'user', cmd: 'get-by-id' }, { id: otp.user_id });
     const user = await lastValueFrom(user$).catch(e => { throw new UnauthorizedException(e.message) });
+    if (!decode.updatedAt || !moment(user.updatedAt).isSame(decode.updatedAt)) 
+      throw new UnauthorizedException('Your account information has been changed. Please login again')
 
     request.user = user;
     return true;
