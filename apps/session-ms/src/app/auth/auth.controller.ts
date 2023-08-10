@@ -73,9 +73,7 @@ export class AuthController {
             }
         }).catch(e => { throw new RpcException(e.message) });
 
-        console.log(otp)
-
-        if (!this.verify_otp(otp.value))
+        if (otp.value !== data.otp)
             throw new RpcException('Invalid OTP');
 
         otp = await prisma.otp.update({

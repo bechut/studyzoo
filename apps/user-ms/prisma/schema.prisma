@@ -46,11 +46,20 @@ model Player {
   Profile Profile?
 }
 
+enum INTRO_TYPE {
+  WELCOME
+  PLAYER
+}
+
 model Intro {
-  id        String    @id @default(uuid())
-  title     String    @default("") @db.VarChar(255) @unique()
-  image     String    @default("") @db.VarChar(255)
-  image_url String    @default("") @db.VarChar(255)
-  createdAt DateTime  @default(now()) @db.Timestamptz
-  updatedAt DateTime? @db.Timestamptz
+  id        String     @id @default(uuid())
+  title     String     @unique() @default("") @db.VarChar(255)
+  image     String     @default("") @db.VarChar(255)
+  image_url String     @default("") @db.VarChar(255)
+  type      INTRO_TYPE @default(WELCOME)
+  order     Int?
+  createdAt DateTime   @default(now()) @db.Timestamptz
+  updatedAt DateTime?  @db.Timestamptz
+
+  @@unique([order, type])
 }

@@ -31,6 +31,7 @@ export const MISSION_SELECTION = {
     id: true,
     code: true,
     title: true,
+    video: true,
     videoUrl: true,
     mapImage: true,
     mapImageUrl: true,

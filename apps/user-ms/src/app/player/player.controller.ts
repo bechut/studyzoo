@@ -2,8 +2,9 @@ import prisma from '../../../prisma/client'
 import { MessagePattern, RpcException } from '@nestjs/microservices';
 
 import { Controller } from '@nestjs/common';
-import { CreatePlayerDto, PlayerProfileDto } from '@validator';
+import { CreatePlayerDto, EditPlayerProfileDto, PlayerProfileDto } from '@validator';
 import { v4 } from 'uuid';
+import { WITH_PROFILE } from '@constants';
 
 @Controller('player')
 export class PlayerController {
@@ -20,5 +21,27 @@ export class PlayerController {
             })
         ]).catch(e => { throw new RpcException(e.message) });
         return true;
+    }
+
+    @MessagePattern({ service: 'player', cmd: 'update' })
+    async updatePlayer(data: EditPlayerProfileDto & { player_id: string }) {
+        await prisma.profile.update({
+            data: {
+                first_name: data.first_name,
+                last_name: data.last_name,
+                gender: data.gender,
+                age: data.age,
+            },
+            where: {
+                player_id: data.player_id
+            },
+        });
+
+        return await prisma.player.findUniqueOrThrow({
+            where: { id: data.player_id }, select: {
+                id: true,
+                ...WITH_PROFILE
+            }
+        }).catch(e => { throw new RpcException(e.message) });
     }
 }

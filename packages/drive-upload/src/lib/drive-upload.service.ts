@@ -57,7 +57,7 @@ export class DriveUploadService {
     }
   }
 
-  async uploadFile(name: string, mimeType: string, path: string, parentFolderId: string) {
+  async uploadFile(name: string, mimeType: string, path: string, parentFolderId: string, clearUpload: boolean) {
     const rootFolderId = this.configService.get<string>('GG_ROOT_FOLDER_ID') as string;
     try {
       const createFile = await this.getDrive().files.create({
@@ -77,7 +77,7 @@ export class DriveUploadService {
     } catch (e) {
       throw new BadGatewayException(e)
     } finally {
-      rmSync(join(cwd(), 'upload'), { recursive: true, force: true })
+      clearUpload && rmSync(join(cwd(), 'upload/*'), { recursive: true, force: true })
     }
   }
 

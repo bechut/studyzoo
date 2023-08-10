@@ -7,6 +7,9 @@ export const USER_SELECTION = {
     password: true,
     createdAt: true,
     updatedAt: true,
+}
+
+export const WITH_PROFILE = {
     Profile: {
         select: {
             id: true,
@@ -23,7 +26,7 @@ export const WITH_PLAYER = {
     Players: {
         select: {
             id: true,
-            Profile: USER_SELECTION.Profile
+            ...WITH_PROFILE
         }
     }
 }

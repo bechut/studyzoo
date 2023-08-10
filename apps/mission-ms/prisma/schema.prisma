@@ -23,9 +23,10 @@ model Mission {
   id           String    @id @default(uuid())
   code         String    @unique @db.VarChar(16)
   title        String    @db.VarChar(255)
-  videoUrl     String    @db.VarChar(255)
-  mapImage     String    @db.VarChar(255)
-  mapImageUrl  String    @db.VarChar(255)
+  video        String?   @db.VarChar(255)
+  videoUrl     String?   @db.VarChar(255)
+  mapImage     String?   @db.VarChar(255)
+  mapImageUrl  String?   @db.VarChar(255)
   duration     Int
   distance     String    @db.VarChar(32)
   description  String

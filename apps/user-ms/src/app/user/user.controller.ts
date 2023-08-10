@@ -1,4 +1,4 @@
-import { USER_SELECTION, WITH_PLAYER } from '@constants';
+import { USER_SELECTION, WITH_PLAYER, WITH_PROFILE } from '@constants';
 import { CreateUserDto, UpdateUserDto } from '@validator';
 import { Controller } from '@nestjs/common';
 
@@ -37,7 +37,9 @@ export class UserController {
             })
         ]).catch(e => { throw new RpcException(e.message) })
         return await prisma.user.findUniqueOrThrow({
-            select: USER_SELECTION,
+            select: {
+                ...USER_SELECTION, ...WITH_PROFILE
+            },
             where: {
                 id: user_id,
             }
@@ -47,7 +49,9 @@ export class UserController {
     @MessagePattern({ service: 'user', cmd: 'get-by-email' })
     async getByEmail(data: { email: string }) {
         const user = await prisma.user.findUniqueOrThrow({
-            select: USER_SELECTION,
+            select: {
+                ...USER_SELECTION, ...WITH_PROFILE
+            },
             where: {
                 email: data.email,
             },
@@ -69,7 +73,9 @@ export class UserController {
     @MessagePattern({ service: 'user', cmd: 'update' })
     async update(data: { id: string, payload: UpdateUserDto }) {
         await prisma.user.findUniqueOrThrow({
-            select: USER_SELECTION,
+            select: {
+                ...USER_SELECTION, ...WITH_PROFILE
+            },
             where: {
                 id: data.id,
             },
@@ -81,7 +87,9 @@ export class UserController {
             }
         }).catch(e => { throw new RpcException(e.message) });
         return await prisma.user.update({
-            select: USER_SELECTION,
+            select: {
+                ...USER_SELECTION, ...WITH_PROFILE
+            },
             where: {
                 id: data.id,
             },

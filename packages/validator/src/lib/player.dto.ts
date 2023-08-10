@@ -1,9 +1,11 @@
 import { type GENDERS } from '@user-ms-prisma';
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsOptional, MinLength, ValidateNested } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, Min, MinLength, ValidateNested } from 'class-validator';
+import { EGENDERS } from './user.dto';
 
 export class PlayerProfileDto {
   @IsNotEmpty()
+  @IsEnum(EGENDERS)
   gender: GENDERS;
   @IsNotEmpty()
   @MinLength(3)
@@ -32,4 +34,21 @@ export class RegisterBinocularDto {
   player_id: string;
   @IsNotEmpty()
   machine_code: string;
+}
+
+export class EditPlayerProfileDto {
+  @IsEnum(EGENDERS)
+  @IsNotEmpty()
+  gender: GENDERS;
+  @IsNotEmpty()
+  @MinLength(3)
+  first_name: string;
+  @IsNotEmpty()
+  @MinLength(3)
+  last_name: string;
+  @IsNotEmpty()
+  @Min(10)
+  age: number;
+  @IsOptional()
+  bio: string;
 }

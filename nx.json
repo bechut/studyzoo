@@ -3,7 +3,12 @@
     "default": {
       "runner": "nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
         "accessToken": "NWUzMDJmZTItYTcwNC00OWFhLWE0MGEtMTExNGM1ZWJlMmNmfHJlYWQtd3JpdGU="
       }
     }
@@ -15,7 +20,11 @@
   },
   "targetDefaults": {
     "test": {
-      "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"]
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/jest.preset.js"
+      ]
     },
     "lint": {
       "inputs": [
@@ -23,6 +32,24 @@
         "{workspaceRoot}/.eslintrc.json",
         "{workspaceRoot}/.eslintignore"
       ]
+    }
+  },
+  "generators": {
+    "@nx/react": {
+      "application": {
+        "style": "less",
+        "linter": "eslint",
+        "bundler": "vite",
+        "babel": true
+      },
+      "component": {
+        "style": "less"
+      },
+      "library": {
+        "style": "less",
+        "linter": "eslint",
+        "unitTestRunner": "jest"
+      }
     }
   }
 }
