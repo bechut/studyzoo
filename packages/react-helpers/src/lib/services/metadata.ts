@@ -15,6 +15,16 @@ const metadata = [
         uri: "mission",
         name: "create",
       },
+      {
+        method: axiosCallee("get"),
+        uri: "mission/assets",
+        name: "get-mission-assets-by-type",
+      },
+      {
+        method: axiosCallee("post"),
+        uri: "mission/assets",
+        name: "create-mission-assets",
+      },
     ],
   },
 ];

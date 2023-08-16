@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsOptional, Length, MinLength } from 'class-validator';
+import { MissionAssetType } from '@types';
+import { IsNotEmpty, IsOptional, Length, MinLength, IsEnum } from 'class-validator';
 
 export class CreateMissionDto {
   @Length(6, 6)
@@ -37,4 +38,17 @@ export class UpdateMissionDto {
   mapImage: string;
   @IsOptional()
   mapImageUrl: string;
+}
+
+export class UploadMissionAssetsDto {
+  @IsNotEmpty()
+  @IsEnum(MissionAssetType)
+  type: MissionAssetType;
+}
+
+export class AddAssetDto {
+  type: MissionAssetType;
+  cloudLink: string;
+  cloudId: string;
+  name: string;
 }

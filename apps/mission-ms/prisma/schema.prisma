@@ -19,14 +19,15 @@ enum MachineStatus {
   AVAILABLE
 }
 
+enum MissionAssetType {
+  VIDEO
+  IMAGE
+}
+
 model Mission {
   id           String    @id @default(uuid())
   code         String    @unique @db.VarChar(16)
   title        String    @db.VarChar(255)
-  video        String?   @db.VarChar(255)
-  videoUrl     String?   @db.VarChar(255)
-  mapImage     String?   @db.VarChar(255)
-  mapImageUrl  String?   @db.VarChar(255)
   duration     Int
   distance     String    @db.VarChar(32)
   description  String
@@ -35,6 +36,7 @@ model Mission {
 
   Activities Activity[]
   Badges     Badge[]
+  Assets     MissionAsset[]
 }
 
 model Activity {
@@ -72,4 +74,24 @@ model Machine {
   type      MachineType
   status    MachineStatus
   player_id String?
+}
+
+model Asset {
+  id           String           @id @default(uuid())
+  name         String           @db.VarChar(255)
+  cloudId      String           @db.VarChar(255)
+  cloudLink    String           @db.VarChar(255)
+  type         MissionAssetType @default(IMAGE)
+  createdAt    DateTime         @default(now()) @db.Timestamptz
+  lastModified DateTime?        @updatedAt @db.Timestamptz
+  Missions     MissionAsset[]
+}
+
+model MissionAsset {
+  id         String   @id @default(uuid())
+  mission_id String?
+  Mission    Mission? @relation(fields: [mission_id], references: [id])
+  asset_id   String?
+  Asset      Asset?   @relation(fields: [asset_id], references: [id])
+  createdAt  DateTime @default(now()) @db.Timestamptz
 }

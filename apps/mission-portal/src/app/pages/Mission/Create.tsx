@@ -8,9 +8,19 @@ import {
   Upload,
   Spin,
 } from 'antd';
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 import { MissionContext } from '.';
 import { UploadOutlined } from '@ant-design/icons';
+
+type PayloadType = {
+  title: string;
+  code: string;
+  duration: any;
+  distance: string;
+  description: string;
+  map: { file: { originFileObj: File } };
+  video: { file: { originFileObj: File } };
+};
 
 export default function CreateMission() {
   const {
@@ -19,15 +29,16 @@ export default function CreateMission() {
       setCreateVisible,
       handleCreateMissions,
       createLoading,
-      createMissionForm
+      createMissionForm,
     },
   } = useContext(MissionContext);
 
   const onClose = () => {
     setCreateVisible(false);
+    createMissionForm.resetFields();
   };
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: PayloadType) => {
     const formData = new FormData();
 
     formData.append('title', values.title);

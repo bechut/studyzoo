@@ -11,6 +11,7 @@ import { MsClientModule } from '@ms-client';
 import { MissionModule } from './mission/mission.module';
 import { IntroModule } from './intro/intro.module';
 import { ConfigModule } from '@nestjs/config';
+import { SseModule } from '@sse';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { ConfigModule } from '@nestjs/config';
     JwtModule,
     MsClientModule,
     MissionModule,
-    IntroModule
+    IntroModule,
+    SseModule
   ],
   controllers: [AppController],
   providers: [

@@ -13,7 +13,6 @@ export const axiosCallee = (method: string) => {
       headers['Content-Type'] = 'multipart/form-data';
     }
     delete context.headers;
-    console.log(headers)
     const config = ["GET", "DELETE"].includes(method.toUpperCase())
       ? {
         url: uri,
@@ -23,7 +22,6 @@ export const axiosCallee = (method: string) => {
       }
       : { url: uri, method, data: context, headers };
 
-    console.log(config)
     try {
       const json = await instance(config);
       return json.data;
@@ -59,7 +57,6 @@ export function getInstance(baseURL: string, timeout: number) {
     async (error) => {
       const originalRequest = error.config;
       const statusCode = error.response.status;
-      console.log(error);
 
       if ([403, 401].includes(statusCode) && !originalRequest._retry) {
         originalRequest._retry = true;

@@ -1,8 +1,8 @@
-import { CreateMissionDto, UpdateMissionDto } from '@validator';
+import { CreateMissionDto, UpdateMissionDto, AddAssetDto, UploadMissionAssetsDto } from '@validator';
 import { MISSION_SELECTION, WITH_ACTIVITIES, WITH_BADGES } from '@constants';
 import { Controller } from '@nestjs/common';
 import { MsClientService } from '@ms-client';
-import { MessagePattern, RpcException } from '@nestjs/microservices';
+import { MessagePattern } from '@nestjs/microservices';
 import prisma from '../../../prisma/client'
 
 @Controller('mission')
@@ -15,8 +15,8 @@ export class MissionController {
             select: {
                 ...MISSION_SELECTION,
                 ...WITH_ACTIVITIES,
-                ...WITH_BADGES
-            }
+                ...WITH_BADGES,
+            },
         });
         return mission;
     }
@@ -46,7 +46,7 @@ export class MissionController {
                 distance: data.distance,
                 description: data.description,
             }
-        }).catch(e => { throw new RpcException(e) });
+        });
         return mission;
     }
 
@@ -62,13 +62,32 @@ export class MissionController {
                 duration: data.duration,
                 distance: data.distance,
                 description: data.description,
-                mapImage: data.mapImage,
-                mapImageUrl: data.mapImageUrl,
-                video: data.video,
-                videoUrl: data.videoUrl,
                 lastModified: new Date()
             }
-        }).catch(e => { throw new RpcException(e) });
+        });
         return mission;
+    }
+
+    @MessagePattern({ service: 'mission', cmd: 'create-asset' })
+    async createAsset(data: AddAssetDto) {
+        const mission = await prisma.asset.create({
+            data: {
+                name: data.name,
+                cloudId: data.cloudId,
+                cloudLink: data.cloudLink,
+                type: data.type,
+            }
+        });
+        return mission;
+    }
+
+    @MessagePattern({ service: 'mission', cmd: 'get-assets' })
+    async getAsset(data: UploadMissionAssetsDto) {
+        const assets = await prisma.asset.findMany({
+            where: {
+                type: data.type
+            }
+        });
+        return assets;
     }
 }

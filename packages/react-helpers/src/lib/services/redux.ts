@@ -42,12 +42,13 @@ function generate(name: string, apiHandler: any) {
                 state.status = false;
             });
             builder.addCase(thunk.fulfilled, (state: TInitialState, action: any) => {
+                console.log(action.payload)
                 if (!action.payload.status) {
                     state.data = null;
                     state.status = false;
                     state.errors = action.payload;
                 } else {
-                    state.data = action.payload;
+                    state.data = { ...action.payload };
                     state.status = true;
                     state.errors = null;
                 }

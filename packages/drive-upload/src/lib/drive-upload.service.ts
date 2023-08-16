@@ -77,7 +77,7 @@ export class DriveUploadService {
     } catch (e) {
       throw new BadGatewayException(e)
     } finally {
-      clearUpload && rmSync(join(cwd(), 'upload/*'), { recursive: true, force: true })
+      clearUpload && rmSync(path, { recursive: true, force: true })
     }
   }
 

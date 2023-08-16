@@ -26,7 +26,6 @@ export class AuthController {
     }
 
     private verify_otp(token: string) {
-        console.log(token, this.otp_secret, authenticator.verify({ token, secret: this.otp_secret }))
         return authenticator.verify({ token, secret: this.otp_secret })
     }
 

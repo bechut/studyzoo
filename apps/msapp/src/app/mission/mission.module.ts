@@ -4,6 +4,7 @@ import { MsClientModule } from '@ms-client';
 import { ConfigModule } from '@nestjs/config';
 import { MulterModule } from '@nestjs/platform-express'
 import { DriveUploadModule } from '@drive-upload';
+import { SseModule } from '@sse';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { DriveUploadModule } from '@drive-upload';
       dest: './upload',
     }),
     DriveUploadModule, 
-    MsClientModule
+    MsClientModule,
+    SseModule
   ],
   controllers: [MissionController]
 })
