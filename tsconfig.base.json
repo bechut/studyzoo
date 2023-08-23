@@ -39,6 +39,9 @@
       "@react-helpers": [
         "packages/react-helpers/src/index.ts"
       ],
+      "@sse": [
+        "packages/sse/src/index.ts"
+      ],
       "@types": [
         "packages/types/src/index.ts"
       ],
@@ -48,8 +51,8 @@
       "@validator": [
         "packages/validator/src/index.ts"
       ],
-      "@sse": [
-        "packages/sse/src/index.ts"
+      "@dummy": [
+        "packages/dummy/src/index.ts"
       ]
     }
   },

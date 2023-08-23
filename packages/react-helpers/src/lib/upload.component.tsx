@@ -8,15 +8,14 @@ type UploadMultiFileType = {
   accept: string;
   maxCount: number;
   uploadFn: (fd: FormData) => void;
-  title: string;
-  assetType: MissionAssetType
+  assetType: MissionAssetType;
 };
 
 export function UploadMultiFile({
   accept,
   maxCount,
   uploadFn,
-  assetType
+  assetType,
 }: UploadMultiFileType) {
   const [filesList, setFileList] = useState<any>([]);
 
@@ -25,7 +24,7 @@ export function UploadMultiFile({
 
     formData.append('type', assetType);
 
-    filesList.forEach(async (file: any) => {
+    filesList.forEach(async (file: { originFileObj: File }) => {
       formData.append('files', file.originFileObj);
     });
 

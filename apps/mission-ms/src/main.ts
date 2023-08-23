@@ -9,6 +9,8 @@ import { Transport, MicroserviceOptions } from '@nestjs/microservices';
 
 import { AppModule } from './app/app.module';
 
+import { RPCExceptionFilter, PreRPCExceptionInterceptor } from '@interceptor';
+
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
@@ -20,6 +22,10 @@ async function bootstrap() {
       }
     },
   );
+
+  app.useGlobalFilters(new RPCExceptionFilter('ms-mission-errors'));
+  app.useGlobalInterceptors(new PreRPCExceptionInterceptor());
+
   await app.listen();
   Logger.log(
     `🚀 Micro service is running on ${process.env.MISSION_MS_PORT}`

@@ -1,0 +1,1 @@
+export const GG_LINK_FILE = (id: string, api_key: string) => `https://www.googleapis.com/drive/v3/files/${id}?alt=media&key=${api_key}`

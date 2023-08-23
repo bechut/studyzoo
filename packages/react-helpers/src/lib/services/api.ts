@@ -13,6 +13,10 @@ export const axiosCallee = (method: string) => {
       headers['Content-Type'] = 'multipart/form-data';
     }
     delete context.headers;
+    if (context.customUri) {
+      uri = context.customUri;
+      delete context.customUri;
+    }
     const config = ["GET", "DELETE"].includes(method.toUpperCase())
       ? {
         url: uri,

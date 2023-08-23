@@ -1,5 +1,0 @@
--- AlterTable
-ALTER TABLE "Mission" ADD COLUMN     "video" VARCHAR(255),
-ALTER COLUMN "videoUrl" DROP NOT NULL,
-ALTER COLUMN "mapImage" DROP NOT NULL,
-ALTER COLUMN "mapImageUrl" DROP NOT NULL;

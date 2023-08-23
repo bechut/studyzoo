@@ -3,8 +3,6 @@ export const WITH_ACTIVITIES = {
         select: {
             id: true,
             title: true,
-            mapImage: true,
-            mapImageUrl: true,
             description: true,
             for: true,
             createdAt: true,
@@ -23,6 +21,26 @@ export const WITH_BADGES = {
             description: true,
             createdAt: true,
             lastModified: true,
+        }
+    },
+}
+
+export const WITH_ASSETS = {
+    Assets: {
+        select: {
+            id: true,
+            type: true,
+            Asset: {
+                select: {
+                    id: true,
+                    name: true,
+                    cloudId: true,
+                    cloudLink: true,
+                    type: true,
+                    createdAt: true,
+                    lastModified: true,
+                }
+            }
         }
     },
 }

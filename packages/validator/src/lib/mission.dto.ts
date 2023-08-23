@@ -13,6 +13,10 @@ export class CreateMissionDto {
   distance: string;
   @IsNotEmpty()
   description: string;
+  @IsOptional()
+  map_id: string;
+  @IsOptional()
+  video_id: string;
 }
 
 export class UpdateMissionDto {
@@ -31,19 +35,21 @@ export class UpdateMissionDto {
   @IsOptional()
   description: string;
   @IsOptional()
-  video: string;
+  map_id: string;
   @IsOptional()
-  videoUrl: string;
-  @IsOptional()
-  mapImage: string;
-  @IsOptional()
-  mapImageUrl: string;
+  video_id: string;
 }
 
 export class UploadMissionAssetsDto {
   @IsNotEmpty()
   @IsEnum(MissionAssetType)
   type: MissionAssetType;
+}
+
+export class GetMissionAssetsDto {
+  @IsNotEmpty()
+  @IsEnum(MissionAssetType, { each: true })
+  types: MissionAssetType[];
 }
 
 export class AddAssetDto {

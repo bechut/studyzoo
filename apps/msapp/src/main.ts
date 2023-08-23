@@ -8,6 +8,8 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
 
+import { ExceptionInterceptor } from '@interceptor';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
@@ -16,6 +18,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type, Accept',
   });
+  app.useGlobalFilters(new ExceptionInterceptor('msapp-errors'));
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalPipes(new ValidationPipe())
   const port = process.env.APP_MS_PORT || 3001;

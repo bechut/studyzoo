@@ -11,9 +11,24 @@ const metadata = [
         name: "get-all",
       },
       {
+        method: axiosCallee("get"),
+        uri: "mission",
+        name: "get-by-id",
+      },
+      {
         method: axiosCallee("post"),
         uri: "mission",
         name: "create",
+      },
+      {
+        method: axiosCallee("patch"),
+        uri: "mission",
+        name: "update",
+      },
+      {
+        method: axiosCallee("delete"),
+        uri: "mission/:id",
+        name: "delete",
       },
       {
         method: axiosCallee("get"),
@@ -24,6 +39,11 @@ const metadata = [
         method: axiosCallee("post"),
         uri: "mission/assets",
         name: "create-mission-assets",
+      },
+      {
+        method: axiosCallee("patch"),
+        uri: "mission/assets",
+        name: "update-mission-assets",
       },
     ],
   },

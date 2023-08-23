@@ -42,8 +42,6 @@ model Mission {
 model Activity {
   id           String      @id @default(uuid())
   title        String      @db.VarChar(255)
-  mapImage     String      @db.VarChar(255)
-  mapImageUrl  String      @db.VarChar(255)
   description  String
   createdAt    DateTime    @default(now()) @db.Timestamptz
   lastModified DateTime?   @updatedAt @db.Timestamptz
@@ -77,21 +75,24 @@ model Machine {
 }
 
 model Asset {
-  id           String           @id @default(uuid())
-  name         String           @db.VarChar(255)
-  cloudId      String           @db.VarChar(255)
-  cloudLink    String           @db.VarChar(255)
-  type         MissionAssetType @default(IMAGE)
-  createdAt    DateTime         @default(now()) @db.Timestamptz
-  lastModified DateTime?        @updatedAt @db.Timestamptz
-  Missions     MissionAsset[]
+  id            String           @id @default(uuid())
+  name          String           @db.VarChar(255)
+  cloudId       String           @db.VarChar(255)
+  cloudLink     String           @db.VarChar(255)
+  type          MissionAssetType @default(IMAGE)
+  createdAt     DateTime         @default(now()) @db.Timestamptz
+  lastModified  DateTime?        @updatedAt @db.Timestamptz
+  Missions      MissionAsset[]
 }
 
 model MissionAsset {
-  id         String   @id @default(uuid())
+  id         String           @id @default(uuid())
   mission_id String?
-  Mission    Mission? @relation(fields: [mission_id], references: [id])
+  Mission    Mission?         @relation(fields: [mission_id], references: [id])
   asset_id   String?
-  Asset      Asset?   @relation(fields: [asset_id], references: [id])
-  createdAt  DateTime @default(now()) @db.Timestamptz
+  Asset      Asset?           @relation(fields: [asset_id], references: [id])
+  createdAt  DateTime         @default(now()) @db.Timestamptz
+  type       MissionAssetType @default(IMAGE)
+
+  @@unique([mission_id, type])
 }

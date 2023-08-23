@@ -7,6 +7,16 @@ import {
 import metadata from "./metadata";
 import { AxiosInstance } from "axios";
 
+export interface IRedux<T> {
+    loading: boolean;
+    data: { data: T };
+};
+
+export const IReduxSample = (data: any) =>  ({
+    loading: false,
+    data: { data },
+});
+
 type TInitialState = {
     loading: boolean;
     data: any;
@@ -42,7 +52,6 @@ function generate(name: string, apiHandler: any) {
                 state.status = false;
             });
             builder.addCase(thunk.fulfilled, (state: TInitialState, action: any) => {
-                console.log(action.payload)
                 if (!action.payload.status) {
                     state.data = null;
                     state.status = false;

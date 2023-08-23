@@ -1,68 +1,99 @@
-import { Drawer, Image, Space, Table } from 'antd';
-import { useContext } from 'react';
-import { MissionContext } from '.';
-import { UploadMultiFile } from '@react-helpers';
+import { Image, Spin, Table, notification } from 'antd';
+import { useEffect } from 'react';
+import { ReduxDispatchHelper, UploadMultiFile } from '@react-helpers';
 import { MissionAssetType } from '@types';
 
-export default function MissionImages() {
-  const {
-    images: {
-      missionImagesVisible,
-      setMissionImagesVisible,
-      missionAssets,
-      handleCreateMissionAssets,
+export const getMissionAssets = (types: MissionAssetType[]) => {
+  new ReduxDispatchHelper(
+    'mission->get-mission-assets-by-type',
+    { types },
+    () => {
+      // setAssetWaiting(false);
     },
-  } = useContext(MissionContext);
+    (e) => {
+      return notification.error({ message: e.details.message });
+    },
+  ).do();
+};
 
-  const onClose = () => {
-    setMissionImagesVisible(false);
+export const uploadAssetEvent = () => {
+  const eventSource = new EventSource(import.meta.env.VITE_MS_APP_EVENT_URL);
+  eventSource.onmessage = ({ data }) => {
+    getMissionAssets([JSON.parse(data).data.type]);
   };
+};
+
+export const createMissionAssets = (fd: FormData) => {
+  new ReduxDispatchHelper(
+    'mission->create-mission-assets',
+    fd,
+    (e) => {
+      return notification.success({ message: e.message });
+    },
+    (e) => {
+      return notification.error({ message: e.details.message });
+    },
+  ).do();
+};
+
+uploadAssetEvent();
+
+export default function MissionImages(props) {
+  useEffect(() => {
+    getMissionAssets([MissionAssetType.IMAGE]);
+  }, []);
 
   return (
-    <Drawer
-      onClose={onClose}
-      size="large"
-      title="Mission Images"
-      open={missionImagesVisible}
-    >
-      <Space direction="vertical">
+    <>
+      <Spin spinning={false}>
         <UploadMultiFile
           accept="image/*"
           maxCount={3}
-          uploadFn={handleCreateMissionAssets}
+          uploadFn={createMissionAssets}
           assetType={MissionAssetType.IMAGE}
         />
-        <Table
-          rowKey={'id'}
-          dataSource={missionAssets}
-          columns={[
-            {
-              key: 'name',
-              dataIndex: 'name',
-              title: 'Name',
+      </Spin>
+      <Table
+        loading={
+          props.reduxStates['mission->get-mission-assets-by-type'].loading
+        }
+        rowKey={'id'}
+        dataSource={
+          props.reduxStates['mission->get-mission-assets-by-type']?.data?.data
+        }
+        columns={[
+          {
+            key: 'name',
+            dataIndex: 'name',
+            title: 'Name',
+          },
+          {
+            key: 'type',
+            dataIndex: 'type',
+            title: 'Type',
+          },
+          {
+            key: 'mission_used',
+            dataIndex: '_count',
+            title: 'Total mission used',
+            render: (_count: { Missions: number }) => _count.Missions,
+          },
+          {
+            key: 'cloudId',
+            dataIndex: 'cloudId',
+            title: 'Asset',
+            render: (a: string) => {
+              return (
+                <Image
+                  style={{ width: '50px' }}
+                  src={`https://drive.google.com/uc?export=view&id=${a}`}
+                  alt="asset image"
+                />
+              );
             },
-            {
-              key: 'type',
-              dataIndex: 'type',
-              title: 'Type',
-            },
-            {
-              key: 'cloudId',
-              dataIndex: 'cloudId',
-              title: 'Asset',
-              render: (a: string) => {
-                return (
-                  <Image
-                    style={{ width: '50px' }}
-                    src={`https://drive.google.com/uc?export=view&id=${a}`}
-                    alt="asset image"
-                  />
-                );
-              },
-            },
-          ]}
-        />
-      </Space>
-    </Drawer>
+          },
+        ]}
+      />
+    </>
   );
 }

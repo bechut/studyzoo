@@ -1,16 +1,17 @@
+export interface IMissionAssets {
+    Asset: IMissionAsset; id: string; type: MissionAssetType
+}
+
 export interface IMission {
     id: string;
     code: string;
     title: string;
-    video?: string;
-    videoUrl?: string;
-    mapImag?: string;
-    mapImageUrl?: string;
     duration?: number;
     distance?: string;
     description: string;
     createdAt: Date;
     lastModified: Date;
+    Assets: IMissionAssets[]
 }
 
 export interface IMissionAsset {
